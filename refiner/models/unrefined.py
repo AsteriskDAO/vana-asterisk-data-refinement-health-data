@@ -1,23 +1,21 @@
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel
+from datetime import datetime
 
 
 class Profile(BaseModel):
-    name: str
-    locale: str
+    age_range: Optional[str]
+    ethnicity: Optional[str]
+    location: Optional[str]
+    is_pregnant: Optional[bool]
 
-class Storage(BaseModel):
-    percentUsed: float
-
-class Metadata(BaseModel):
-    source: str
-    collectionDate: str
-    dataType: str
-
-class User(BaseModel):
-    userId: str
-    email: str
-    timestamp: int
-    profile: Profile
-    storage: Optional[Storage] = None
-    metadata: Optional[Metadata] = None
+class HealthData(BaseModel):
+    healthDataId: str
+    user_hash: str
+    research_opt_in: bool = False
+    profile: Optional[Profile]
+    conditions: Optional[List[str]] = []
+    medications: Optional[List[str]] = []
+    treatments: Optional[List[str]] = []
+    caretaker: Optional[List[str]] = []
+    timestamp: datetime = datetime.now()
