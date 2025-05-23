@@ -21,3 +21,5 @@ const healthDataSchema = new mongoose.Schema({
   caretaker: { type: [String] },
   timestamp: { type: Date, default: Date.now }
 })
+
+// https://blue-yummy-rooster-621.mypinata.cloud/ipfs/bafkreictuisbhmunlfclar2ukuaavok4coscmmcveqzrquft2m4lgvrhk4
