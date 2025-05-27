@@ -1,7 +1,7 @@
 {
-    "name": "health_data",
-    "version": "1.0.0",
-    "description": "Schema for storing personal health data and metrics",
-    "dialect": "sqlite",
-    "schema": "CREATE TABLE IF NOT EXISTS profiles (\n    profile_id INTEGER PRIMARY KEY AUTOINCREMENT,\n    age_range TEXT,\n    ethnicity TEXT,\n    location TEXT,\n    is_pregnant BOOLEAN\n);\n\nCREATE TABLE IF NOT EXISTS health_data (\n    health_data_id TEXT PRIMARY KEY,\n    user_hash TEXT NOT NULL,\n    research_opt_in BOOLEAN DEFAULT FALSE,\n    profile_id INTEGER,\n    timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,\n    FOREIGN KEY (profile_id) REFERENCES profiles (profile_id)\n        ON DELETE SET NULL ON UPDATE CASCADE\n);\n\nCREATE TABLE IF NOT EXISTS conditions (\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\n    health_data_id TEXT NOT NULL,\n    condition TEXT NOT NULL,\n    FOREIGN KEY (health_data_id) REFERENCES health_data (health_data_id)\n        ON DELETE CASCADE ON UPDATE CASCADE\n);\n\nCREATE TABLE IF NOT EXISTS medications (\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\n    health_data_id TEXT NOT NULL,\n    medication TEXT NOT NULL,\n    FOREIGN KEY (health_data_id) REFERENCES health_data (health_data_id)\n        ON DELETE CASCADE ON UPDATE CASCADE\n);\n\nCREATE TABLE IF NOT EXISTS treatments (\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\n    health_data_id TEXT NOT NULL,\n    treatment TEXT NOT NULL,\n    FOREIGN KEY (health_data_id) REFERENCES health_data (health_data_id)\n        ON DELETE CASCADE ON UPDATE CASCADE\n);\n\nCREATE TABLE IF NOT EXISTS caretakers (\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\n    health_data_id TEXT NOT NULL,\n    caretaker TEXT NOT NULL,\n    FOREIGN KEY (health_data_id) REFERENCES health_data (health_data_id)\n        ON DELETE CASCADE ON UPDATE CASCADE\n);"
-  }
+  "name": "health_data",
+  "version": "1.0.0",
+  "description": "Schema for storing personal health data and metrics",
+  "dialect": "sqlite",
+  "schema": "CREATE TABLE IF NOT EXISTS health_data (\n    health_data_id TEXT PRIMARY KEY,\n    user_hash TEXT NOT NULL,\n    research_opt_in BOOLEAN DEFAULT FALSE,\n    age_range TEXT,\n    ethnicity TEXT,\n    location TEXT,\n    is_pregnant BOOLEAN,\n    conditions JSON DEFAULT '[]',\n    medications JSON DEFAULT '[]',\n    treatments JSON DEFAULT '[]',\n    caretaker JSON DEFAULT '[]',\n    timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP\n);"
+}
