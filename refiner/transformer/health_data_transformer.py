@@ -1,21 +1,11 @@
 from typing import Optional
 from datetime import datetime
 
-from refiner.models.unrefined import HealthData, Profile
+from refiner.models.unrefined import HealthData
 from refiner.models.refined import HealthDataRefined
 
 class HealthDataTransformer:
     @staticmethod
-    def transform_profile(profile: Optional[Profile]) -> Optional[ProfileRefined]:
-        if not profile:
-            return None
-            
-        return ProfileRefined(
-            age_range=profile.age_range,
-            ethnicity=profile.ethnicity,
-            location=profile.location,
-            is_pregnant=profile.is_pregnant
-        )
 
     def transform(self, health_data: HealthData) -> HealthDataRefined:
         return HealthDataRefined(
