@@ -46,7 +46,7 @@ def extract_input() -> None:
                 if input_filename.lower().endswith('.zip'):
                     # It's a JSON file with wrong extension, rename it
                     new_filename = input_filename[:-4] + '.json'
-                    new_path = os.path.join(INPUT_DIR, new_filename)
+                    new_path = os.path.join(settings.INPUT_DIR, new_filename)
                     os.rename(input_file, new_path)
                     logging.info(f"Renamed {input_filename} to {new_filename} as it contains JSON data")
                 continue
@@ -58,7 +58,7 @@ def extract_input() -> None:
             logging.info(f"Extracting ZIP file {input_filename}")
             try:
                 with zipfile.ZipFile(input_file, 'r') as zip_ref:
-                    zip_ref.extractall(INPUT_DIR)
+                    zip_ref.extractall(settings.INPUT_DIR)
                 logging.info(f"Extracted {input_filename}")
             except zipfile.BadZipFile as e:
                 logging.error(f"Failed to extract {input_filename}: {str(e)}")
