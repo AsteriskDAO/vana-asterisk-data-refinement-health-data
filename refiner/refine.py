@@ -41,13 +41,17 @@ class Refiner:
                     )
                     output.schema = schema
                     
-                    # Save schema locally without uploading
+                    # Upload the schema to IPFS
                     schema_file = os.path.join(settings.OUTPUT_DIR, 'schema.json')
                     with open(schema_file, 'w') as f:
                         json.dump(schema.model_dump(), f, indent=4)
+                        schema_ipfs_hash = upload_json_to_ipfs(schema.model_dump())
+                        logging.info(f"Schema uploaded to IPFS with hash: {schema_ipfs_hash}")
                     
-                    # Skip IPFS operations
-                    output.refinement_url = "https://blue-yummy-rooster-621.mypinata.cloud/ipfs/bafkreiccdfvyk4mcaplnoof6edtwxe65ibozkdl355t3lbjikj3aaez3r4"
+                    # Encrypt and upload the database to IPFS
+                    encrypted_path = encrypt_file(settings.REFINEMENT_ENCRYPTION_KEY, self.db_path)
+                    ipfs_hash = upload_file_to_ipfs(encrypted_path)
+                    output.refinement_url = f"{settings.IPFS_GATEWAY_URL}/{ipfs_hash}"
                     continue
 
         logging.info("Data transformation completed successfully")
