@@ -7,7 +7,7 @@ from refiner.models.output import Output
 from refiner.transformer.health_data_transformer import HealthDataTransformer
 from refiner.config import settings
 from refiner.utils.encrypt import encrypt_file
-# from refiner.utils.ipfs import upload_file_to_ipfs, upload_json_to_ipfs  # Comment out IPFS imports
+from refiner.utils.ipfs import upload_file_to_ipfs, upload_json_to_ipfs
 
 class Refiner:
     def __init__(self):
